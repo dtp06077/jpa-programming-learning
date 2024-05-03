@@ -27,6 +27,11 @@ public class JpaMain {
             em.persist(member);
             System.out.println("==AFTER==");
 
+            //1차 캐시에서 엔티티를 가져오므로 select 쿼리가 나가지 않음.
+            Member findMember = em.find(Member.class, 6L);
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.name = " + findMember.getName());
+
            List<Member> result = em.createQuery("select m from Member as m", Member.class)
                    .setFirstResult(2)
                    .setMaxResults(4)
