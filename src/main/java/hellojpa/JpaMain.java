@@ -19,14 +19,14 @@ public class JpaMain {
             Member memberB = new Member();
             memberB.setId(7L);
             memberB.setName("memberB");
-            em.persist(memberB);
+//            em.persist(memberB);
             //엔티티 매니저는 엔티티 등록 시 INSERT 쿼리를 바로 db에 보내지 않음.
             //트랜잭션을 지원하는 쓰기 지연
             System.out.println("=========");
             Member memberC = new Member();
             memberC.setId(8L);
             memberC.setName("memberB");
-            em.persist(memberC);
+//            em.persist(memberC);
 
             //영속
             System.out.println("==BEFORE==");
