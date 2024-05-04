@@ -28,6 +28,14 @@ public class JpaMain {
             memberC.setName("memberB");
 //            em.persist(memberC);
 
+            //영속성 컨텍스트의 변경내용을 db에 반영하는 flush
+            //트랜잭션 커밋시 자동 호출
+            //직접 호출
+            em.flush();
+            //jpql 쿼리 실행시에도 자동 호출됨
+            List<Member> memberList = em.createQuery("select m from Member as m", Member.class)
+                    .getResultList();
+
             //영속
             System.out.println("==BEFORE==");
             //영속성 컨텍스트에 persist해도 바로 db에 반영되지 않음.
