@@ -36,6 +36,14 @@ public class JpaMain {
             List<Member> memberList = em.createQuery("select m from Member as m", Member.class)
                     .getResultList();
 
+            //영속 상태의 엔티티가 영속성 컨텍스트에서 분리 -> 준영속
+            //특정 엔테티만 준영속 상태로 전환
+            em.detach(memberC);
+            //영속성 컨텍스트 초기화
+            em.clear();
+            //영속성 컨텍스트 종료
+            em.close();
+
             //영속
             System.out.println("==BEFORE==");
             //영속성 컨텍스트에 persist해도 바로 db에 반영되지 않음.
