@@ -10,9 +10,28 @@ import java.time.LocalDateTime;
 @Entity(name = "Member") //JPA에서 사용할 엔티티 이름을 지정
 @Getter @Setter
 @Table(name = "MEMBER") //매핑할 테이블 이름
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1, allocationSize = 1)//initialValue - 처음 시작하는 시퀀스 수
+                                            //allocationSize = 시퀀스 한 번 호출에 증가하는 수
+@TableGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        table = "MY_SEQUENCES",
+        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
-    @Id
+    /**
+     * 기본 키 매핑 방법
+     * GeneratedValue - 자동 생성
+     * IDENTITY - 기본 키 생성을 데이터베이스에 위임
+     *          - 데이터베이스에 INSERT 쿼리 실행 후 id값을 알 수 있음 -> 반영 전까진 null
+     *          - 영속성 컨텍스트는 이러한 이유로 em.persist() 시점에 즉시 INSERT 쿼리 실행
+     * SEQUENCE - 유일한 값을 순서대로 생성하는 특별한 데이터베이스 오브젝트
+     * TABLE - 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 모방
+     */
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     //name - 필드와 매핑할 테이블의 컬럼 이름
@@ -43,3 +62,5 @@ public class Member {
     @Transient
     private Integer empty;
 }
+
+
