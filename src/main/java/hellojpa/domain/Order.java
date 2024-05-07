@@ -14,6 +14,7 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
+    @Column(name = "MEMBER_ID")
     private Long memberId;
 
     private LocalDate orderDate;
