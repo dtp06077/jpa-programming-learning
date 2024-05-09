@@ -32,6 +32,7 @@ public class Member {
      */
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "MEMBER_ID")
     private Long id;
 
     //name - 필드와 매핑할 테이블의 컬럼 이름
@@ -61,6 +62,11 @@ public class Member {
     //메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
     @Transient
     private Integer empty;
+
+    //객체의 참조와 테이블의 외래 키를 매핑
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 }
 
 

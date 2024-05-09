@@ -2,7 +2,6 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 public class JpaMain {
 
@@ -17,6 +16,14 @@ public class JpaMain {
         try {
             Member member = new Member();
             member.setUsername("memberA");
+            member.setAge(30);
+            member.setRoleType(RoleType.ADMIN);
+
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            member.setTeam(team);
             em.persist(member);
 
             //비영속
