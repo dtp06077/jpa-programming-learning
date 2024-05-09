@@ -14,17 +14,28 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("memberA");
-            member.setAge(30);
-            member.setRoleType(RoleType.ADMIN);
+            Member memberA = new Member();
+            memberA.setUsername("memberA");
+            memberA.setAge(30);
+            memberA.setRoleType(RoleType.ADMIN);
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            Team teamA = new Team();
+            teamA.setName("TeamA");
+            em.persist(teamA);
 
-            member.setTeam(team);
-            em.persist(member);
+            memberA.setTeam(teamA);
+            em.persist(memberA);
+
+            //참조를 사용해서 연관관계 조회
+            Member findMember = em.find(Member.class, memberA.getId());
+            Team findTeam = findMember.getTeam();
+
+            Team teamB = new Team();
+            teamB.setName("TeamB");
+            em.persist(teamB);
+
+            //연관관계 수정
+            findMember.setTeam(teamB);
 
             //비영속
             //Member memberB = new Member();
