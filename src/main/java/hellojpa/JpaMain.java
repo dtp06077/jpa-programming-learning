@@ -30,12 +30,17 @@ public class JpaMain {
             Member findMember = em.find(Member.class, memberA.getId());
             Team findTeam = findMember.getTeam();
 
+            //역방향 조회
+            //Team 엔티티에서 자신을 참조하는 Member 엔티티의 수를 찾음
+            int memberCount = findTeam.getMembers().size();
+
             Team teamB = new Team();
             teamB.setName("TeamB");
             em.persist(teamB);
 
             //연관관계 수정
             findMember.setTeam(teamB);
+
 
             //비영속
             //Member memberB = new Member();
