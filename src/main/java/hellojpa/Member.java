@@ -67,6 +67,13 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    //연관관계 편의 메소드
+    //연관관계의 주인에 값을 입력하는 것은 필수
+    private void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
 }
 
 

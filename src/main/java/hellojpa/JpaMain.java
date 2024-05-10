@@ -19,27 +19,35 @@ public class JpaMain {
             memberA.setAge(30);
             memberA.setRoleType(RoleType.ADMIN);
 
+            em.persist(memberA);
+
             Team teamA = new Team();
-            teamA.setName("TeamA");
+            teamA.setName("teamA");
+//            memberA.setTeam(teamA);
+
+            //연관관계의 주인이 아닌 엔티티가 관계를 설정한다면?(역방향)
+            //memberA의 TEAM_ID 값은 null -> 반영이 되지 않음
+            //이런 일을 방지하기 위해 필요한 연관관계 편의 메소드
+//            teamA.getMembers().add(memberA);
             em.persist(teamA);
 
-            memberA.setTeam(teamA);
-            em.persist(memberA);
+            //연관관계 편의 메소드
+            teamA.addMember(memberA);
 
             //참조를 사용해서 연관관계 조회
             Member findMember = em.find(Member.class, memberA.getId());
-            Team findTeam = findMember.getTeam();
+//            Team findTeam = findMember.getTeam();
 
             //역방향 조회
             //Team 엔티티에서 자신을 참조하는 Member 엔티티의 수를 찾음
-            int memberCount = findTeam.getMembers().size();
+//            int memberCount = findTeam.getMembers().size();
 
             Team teamB = new Team();
-            teamB.setName("TeamB");
+            teamB.setName("teamB");
             em.persist(teamB);
 
             //연관관계 수정
-            findMember.setTeam(teamB);
+//            findMember.setTeam(teamB);
 
 
             //비영속
