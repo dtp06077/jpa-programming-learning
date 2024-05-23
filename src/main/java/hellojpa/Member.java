@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Member") //JPA에서 사용할 엔티티 이름을 지정
 @Getter @Setter
@@ -72,6 +74,11 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
+
+    //다대다 양방향 매핑
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<Product> products = new ArrayList<>();
 
     //연관관계 편의 메소드
     //연관관계의 주인에 값을 입력하는 것은 필수
