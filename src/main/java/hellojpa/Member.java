@@ -76,9 +76,16 @@ public class Member {
     private Locker locker;
 
     //다대다 양방향 매핑
+    //연결 테이블에 데이터를 넣을 방법이 없음
+    //실무에서 거의 사용 X
     @ManyToMany
     @JoinTable(name = "MEMBER_PRODUCT")
     private List<Product> products = new ArrayList<>();
+
+    //다대다 매핑의 한계를 보완
+    //연결테이블용 엔티티를 추가하여 연관관계 매핑
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
 
     //연관관계 편의 메소드
     //연관관계의 주인에 값을 입력하는 것은 필수

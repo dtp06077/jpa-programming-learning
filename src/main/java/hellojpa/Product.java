@@ -1,9 +1,6 @@
 package hellojpa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,4 +19,7 @@ public class Product {
     //다대다 양방향 매핑
     @ManyToMany(mappedBy = "products")
     private List<Member> members = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
 }
