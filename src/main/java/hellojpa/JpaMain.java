@@ -14,6 +14,15 @@ public class JpaMain {
         tx.begin();
 
         try {
+            //상속관계 매핑
+            Movie movie = new Movie();
+            movie.setDirector("huiseong");
+            movie.setArtor("boseong");
+            movie.setName("wind");
+            movie.setPrice(20000);
+
+            em.persist(movie);
+
             Member memberA = new Member();
             memberA.setUsername("memberA");
             memberA.setAge(30);
