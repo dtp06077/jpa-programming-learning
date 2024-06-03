@@ -66,7 +66,9 @@ public class Member extends BaseEntity {
     private Integer empty;
 
     //객체의 참조와 테이블의 외래 키를 매핑
-    @ManyToOne
+    //지연 로딩 LAZY를 사용해서 프록시로 조회
+    //즉시 로딩은 JPQL에서 N+1 문제를 일으키므로 가급적 지연 로딩만 사용
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
