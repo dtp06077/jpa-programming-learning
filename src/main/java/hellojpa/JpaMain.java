@@ -27,6 +27,8 @@ public class JpaMain {
             memberA.setUsername("memberA");
             memberA.setAge(30);
             memberA.setRoleType(RoleType.ADMIN);
+            memberA.setHomeAddress(new Address("서울", "테헤란로", "123"));
+            memberA.setWorkPeriod(new Period());
 
             em.persist(memberA);
 

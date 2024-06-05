@@ -89,6 +89,18 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
 
+    /**
+     * 임베디드 타입
+     *  - 높은 재사용성과 응집도를 가짐.
+     *  - 임베디드 타입을 포함한 모든 값 타입은, 값 타입을 소유한 엔티티에 생명주기 의존
+     *  - 기본 생성자가 필수.
+     */
+    @Embedded
+    private Period workPeriod;
+
+    @Embedded
+    private Address homeAddress;
+
     //연관관계 편의 메소드
     //연관관계의 주인에 값을 입력하는 것은 필수
     private void changeTeam(Team team) {
