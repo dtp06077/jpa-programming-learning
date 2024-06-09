@@ -16,4 +16,8 @@ public class Order {
 
     @Embedded
     private Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
 }
