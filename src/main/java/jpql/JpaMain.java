@@ -31,6 +31,14 @@ public class JpaMain {
 
             //Query : 반환 타입이 명확하지 않을 때 사용(String username, int age)
             Query query = em.createQuery("select m.username, m.age from Member m");
+
+            //파라미터 바인딩 - 이름 기준
+            Member findMember = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                            .setParameter("username", "KimHuiSeong")
+                            .getSingleResult();
+
+            System.out.println("result = "+findMember.getUsername());
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
