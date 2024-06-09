@@ -56,13 +56,20 @@ public class JpaMain {
             List<Object[]> objectList1 = em.createQuery("select m.username, m.age from Member m")
                     .getResultList();
             Object[] result2 = objectList1.get(0);
-            System.out.println("objectResult = "+ result1[0]+" "+ result1[1]);
+            System.out.println("objectResult = "+ result2[0]+" "+ result2[1]);
 
             //new 명령어(dto)로 조회
             List<MemberDTO> dtoList1 = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
                     .getResultList();
             MemberDTO memberDTO = dtoList1.get(0);
             System.out.println("dtoResult = "+ memberDTO.getUsername()+" "+ memberDTO.getAge());
+
+            //페이징 API
+            //setFirstResult : 조회 시작 위치
+            //setMaxResult : 조회할 데이터 수
+            em.createQuery("select m from Member m order by m.id desc", Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(5);
 
             tx.commit();
         } catch (Exception e) {
