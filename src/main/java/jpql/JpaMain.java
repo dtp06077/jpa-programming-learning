@@ -45,6 +45,25 @@ public class JpaMain {
             //조인 문법이 보이게 jpql 을 작성하는 것이 바람직
             em.createQuery("select t from Member m join m.team t",Team.class);
 
+            //Query 타입으로 조회
+            List resultList1 = em.createQuery("select m.username, m.age from Member m")
+                    .getResultList();
+            Object o = resultList1.get(0);
+            Object[] result1 = (Object[]) o;
+            System.out.println("queryResult = "+ result1[0]+" "+ result1[1]);
+
+            //Object[] 타입으로 조회
+            List<Object[]> objectList1 = em.createQuery("select m.username, m.age from Member m")
+                    .getResultList();
+            Object[] result2 = objectList1.get(0);
+            System.out.println("objectResult = "+ result1[0]+" "+ result1[1]);
+
+            //new 명령어(dto)로 조회
+            List<MemberDTO> dtoList1 = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
+                    .getResultList();
+            MemberDTO memberDTO = dtoList1.get(0);
+            System.out.println("dtoResult = "+ memberDTO.getUsername()+" "+ memberDTO.getAge());
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
