@@ -39,6 +39,12 @@ public class JpaMain {
 
             System.out.println("result = "+findMember.getUsername());
 
+            //연관관계 엔티티 프로젝션
+            //조인 문법이 실행되는지 예측 불가 -> 바람직한 코딩 X
+            em.createQuery("select m.team from Member m",Team.class);
+            //조인 문법이 보이게 jpql 을 작성하는 것이 바람직
+            em.createQuery("select t from Member m join m.team t",Team.class);
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
