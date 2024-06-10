@@ -71,6 +71,19 @@ public class JpaMain {
                     .setFirstResult(1)
                     .setMaxResults(5);
 
+            //내부 조인
+            em.createQuery("select m from Member m inner join m.team t");
+
+            //외부 조인
+            em.createQuery("select m from Member m left outer join m.team t");
+            //조인 대상 필터링
+            em.createQuery("select m from Member m left join m.team t on t.name = 'A'");
+
+            //세타 조인
+            em.createQuery("select m from Member m, Team t where m.username = t.name");
+            //조인 대상 필터링
+            em.createQuery("select m, t from Member m left join Team t on m.username = t.name");
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
