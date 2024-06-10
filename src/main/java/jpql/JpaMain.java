@@ -92,7 +92,11 @@ public class JpaMain {
             //어떤 팀이든 팀에 소속된 회원
             em.createQuery("select m from Member m where m.team = ANY(select t from Team t)");
 
-        tx.commit();
+            //ENUM 타입의 표현 - 패키지명을 포함해야 함.
+            em.createQuery("select m.username from Member m where m.type = jpql.MemberType.ADMIN");
+            //상속 관계에서 타입 표현
+            em.createQuery("select i from Item i where type(i) = Book", Item.class);
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
