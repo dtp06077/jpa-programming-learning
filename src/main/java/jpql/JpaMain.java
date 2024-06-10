@@ -96,6 +96,21 @@ public class JpaMain {
             em.createQuery("select m.username from Member m where m.type = jpql.MemberType.ADMIN");
             //상속 관계에서 타입 표현
             em.createQuery("select i from Item i where type(i) = Book", Item.class);
+
+            //기본 case 식
+            em.createQuery("select " +
+                    "case when m.age <= 10 then '학생요금'" +
+                    "when m.age >= 60 then '경로요금' " +
+                    "else '일반요금' " +
+                    "end " +
+                    "from Member m");
+            //단순 case 식
+            em.createQuery("select case m.username " +
+                    "when 'KimHuiSeong' then 'true' " +
+                    "else 'false' " +
+                    "end " +
+                    "from Member m");
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
