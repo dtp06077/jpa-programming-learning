@@ -110,6 +110,10 @@ public class JpaMain {
                     "else 'false' " +
                     "end " +
                     "from Member m");
+            //COALESCE : 하나씩 조회해서 null이 아니면 반환
+            em.createQuery("select coalesce(m.username, '이름 없는 회원') from Member m");
+            //NULLIF : 두 값이 같으면 null 반환, 다르면 첫번째 값 반환
+            em.createQuery("select nullif(m.username, '관리자') from Member m");
 
             tx.commit();
         } catch (Exception e) {
