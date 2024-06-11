@@ -52,6 +52,10 @@ public class JpaMain {
                 }
             }
 
+            em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "memberA")
+                    .getSingleResult();
+
             //엔티티 페치 조인 - 팀을 조회하면서 연관된 회원도 함꼐 조회
             em.createQuery("select t from Team t join fetch t.members");
 
