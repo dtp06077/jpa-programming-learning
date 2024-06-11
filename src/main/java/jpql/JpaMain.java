@@ -121,7 +121,7 @@ public class JpaMain {
             //조인 대상 필터링
             em.createQuery("select m, t from Member m left join Team t on m.username = t.name");
 
-            //서브쿼라
+            //서브쿼리
             //팀A 소속인 회원
             em.createQuery("select m from Member m where exists(select t from m.team t where t.name = '팀A')");
             //전체 상품 각각의 재고보다 주문량이 많은 주문들
