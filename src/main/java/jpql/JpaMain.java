@@ -133,7 +133,9 @@ public class JpaMain {
             em.createQuery("select m.username from Member m where m.type = jpql.MemberType.ADMIN");
             //상속 관계에서 타입 표현
             em.createQuery("select i from Item i where type(i) = Book", Item.class);
-
+            //자바의 타입 캐스팅과 유사
+            //상속 구조에서 부모 타입을 특정 자식 타입으로 다룰 때 사용
+            em.createQuery("select i from Item i where treat(i as Book).author = 'kim'", Item.class);
             //기본 case 식
             em.createQuery("select " +
                     "case when m.age <= 10 then '학생요금'" +
