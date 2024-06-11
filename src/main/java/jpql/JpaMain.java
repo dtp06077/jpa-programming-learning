@@ -13,10 +13,47 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("KimHuiSeong");
-            member.setAge(20);
-            em.persist(member);
+            Team teamA = new Team();
+            teamA.setName("TeamA");
+            em.persist(teamA);
+
+            Team teamB = new Team();
+            teamB.setName("TeamB");
+            em.persist(teamB);
+
+            Member memberA = new Member();
+            memberA.setUsername("memberA");
+            memberA.setAge(20);
+            memberA.setTeam(teamA);
+            em.persist(memberA);
+
+            Member memberB = new Member();
+            memberB.setUsername("memberB");
+            memberB.setAge(20);
+            memberB.setTeam(teamA);
+            em.persist(memberB);
+
+            Member memberC = new Member();
+            memberC.setUsername("memberC");
+            memberC.setAge(20);
+            memberC.setTeam(teamB);
+            em.persist(memberC);
+
+            em.flush();
+            em.clear();
+
+            String jpql = "select t from Team t join fetch t.members";
+            List<Team> teams = em.createQuery(jpql, Team.class).getResultList();
+            for(Team team : teams) {
+                System.out.println("teamname = " + team.getName() + ", team = " + team);
+                for (Member member : team.getMembers()) {
+                    //페치 조인으로 팀과 회원을 함께 조회해서 지연 로딩 발생 안함
+                    System.out.println("-> username = " + member.getUsername()+ ", member = " + member);
+                }
+            }
+
+            //엔티티 페치 조인 - 팀을 조회하면서 연관된 회원도 함꼐 조회
+            em.createQuery("select t from Team t join fetch t.members");
 
             //TypeQuery : 반환 타입이 명확할 때 사용(ex Member.class)
             TypedQuery<Member> typeQuery = em.createQuery("select m from Member m", Member.class);
@@ -27,14 +64,14 @@ public class JpaMain {
 
             //결과가 정확히 하나일 때, 단일 객체 반환
             //결과가 없거나 둘 이상이면 Exception 발생
-            Member singleResult = typeQuery.getSingleResult();
+            //Member singleResult = typeQuery.getSingleResult();
 
             //Query : 반환 타입이 명확하지 않을 때 사용(String username, int age)
             Query query = em.createQuery("select m.username, m.age from Member m");
 
             //파라미터 바인딩 - 이름 기준
             Member findMember = em.createQuery("select m from Member m where m.username = :username", Member.class)
-                            .setParameter("username", "KimHuiSeong")
+                            .setParameter("username", "memberA")
                             .getSingleResult();
 
             System.out.println("result = "+findMember.getUsername());
