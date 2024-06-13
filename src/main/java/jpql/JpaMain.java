@@ -42,6 +42,15 @@ public class JpaMain {
             em.flush();
             em.clear();
 
+            //벌크 연산 - update, delete, insert into 지원
+            //쿼리 한 번으로 여러 테이블 로우 변경(엔티티)
+            //반환값은 영향받은 엔티티 수
+            //** 벌크 연산은 영속성 컨텍스트를 무시하고 데이터베이스에 직접 쿼리
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
+
+            System.out.println(resultCount);
+
             String jpql = "select t from Team t join fetch t.members";
             List<Team> teams = em.createQuery(jpql, Team.class).getResultList();
             for(Team team : teams) {
